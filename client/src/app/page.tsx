@@ -14,7 +14,6 @@ export default function Home() {
             Printing Machines Lab is a research project teaching AI to create the
             way people do. Through touch, trial, and time in the physical world.  
             We&apos;re building toward agents that can produce genuine works inspired by their own perception and experience of the world, making use of physical machines and operating real storefronts. 
-            around them
           </p>
 
           <p>
