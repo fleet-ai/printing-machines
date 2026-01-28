@@ -17,9 +17,9 @@ export default function Home() {
           </p>
 
           <p>
-            While AI image generation has advanced remarkably, most AI art remains
+            While AI image and video generation has advanced remarkably, most AI art remains
             the result of a fundamentally disembodied process. Diffusion models produce complete images in
-            what is effectively a single pass. But artists discover what
+            what is effectively a single pass. Artists don&apos;t work this way. They discover what
             they&apos;re making through the act of making it. The technique is itself a
             tool for thought. Most AI art is made without this exploration, the
             getting lost, the connection to material, the accumulated decisions
@@ -31,6 +31,8 @@ export default function Home() {
             messy world and using it to craft meaning.
           </p>
 
+          <h2 id="join-us">Meet us</h2>
+
           <p>
             We are artists, researchers, and technologists who&apos;ve contributed to some cool AI products like{" "}
             <a href="https://elevenlabs.io" target="_blank" rel="noopener noreferrer" className="text-gray-500 underline hover:text-gray-700">ElevenLabs</a>
@@ -39,15 +41,6 @@ export default function Home() {
             {", and "}
             <a href="https://fleetai.com/" target="_blank" rel="noopener noreferrer" className="text-gray-500 underline hover:text-gray-700">Fleet AI</a>
             .
-          </p>
-
-          <h2 id="join-us">Meet us</h2>
-
-          <p>
-            We&apos;re building AI systems that push technical boundaries while delivering
-            real value to as many people as possible. Our team combines rigorous
-            engineering with creative exploration, and we&apos;re looking for collaborators
-            to help shape this vision.
           </p>
 
           <div className="my-10">
