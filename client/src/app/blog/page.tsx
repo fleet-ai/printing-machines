@@ -1,41 +1,40 @@
 import Link from "next/link";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
+import { client } from "@/sanity/client";
 
-const posts = [
-  {
-    id: 1,
-    title: "The Art of Typography in Digital Spaces",
-    author: "Printing Machines Lab",
-    date: "Jan 8, 2026",
-  },
-  {
-    id: 2,
-    title: "Building for the Long Term",
-    author: "Printing Machines Lab",
-    date: "Jan 5, 2026",
-  },
-  {
-    id: 3,
-    title: "The Quiet Revolution of Static Sites",
-    author: "Printing Machines Lab",
-    date: "Dec 28, 2025",
-  },
-  {
-    id: 4,
-    title: "Ink & Pixels: A Love Story",
-    author: "Printing Machines Lab",
-    date: "Dec 20, 2025",
-  },
-  {
-    id: 5,
-    title: "Design Systems That Actually Work",
-    author: "Printing Machines Lab",
-    date: "Dec 15, 2025",
-  },
-];
+interface Post {
+  _id: string;
+  title: string;
+  slug: { current: string };
+  publishedAt: string;
+  excerpt?: string;
+}
 
-export default function Blog() {
+async function getPosts(): Promise<Post[]> {
+  return client.fetch(
+    `*[_type == "post"] | order(publishedAt desc) {
+      _id,
+      title,
+      slug,
+      publishedAt,
+      excerpt
+    }`
+  );
+}
+
+function formatDate(dateString: string): string {
+  const date = new Date(dateString);
+  return date.toLocaleDateString("en-US", {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+  });
+}
+
+export default async function Blog() {
+  const posts = await getPosts();
+
   return (
     <div className="min-h-screen bg-white flex flex-col">
       <Header showNavLogo={true} showMainLogo={false} />
@@ -49,25 +48,29 @@ export default function Blog() {
 
         {/* Posts */}
         <div className="space-y-6">
-          {posts.map((post) => (
-            <Link
-              key={post.id}
-              href={`/blog/${post.id}`}
-              className="grid grid-cols-[100px_1fr] gap-6 no-underline group"
-            >
-              <span className="text-muted font-sans text-sm pt-0.5">
-                {post.date}
-              </span>
-              <div>
-                <h2 className="text-lg font-semibold text-foreground group-hover:underline">
-                  {post.title}
-                </h2>
-                <p className="text-muted font-sans text-sm">
-                  {post.author}
-                </p>
-              </div>
-            </Link>
-          ))}
+          {posts.length === 0 ? (
+            <p className="text-muted">No posts yet. Check back soon.</p>
+          ) : (
+            posts.map((post) => (
+              <Link
+                key={post._id}
+                href={`/blog/${post.slug.current}`}
+                className="grid grid-cols-[100px_1fr] gap-6 no-underline group"
+              >
+                <span className="text-muted font-sans text-sm pt-0.5">
+                  {post.publishedAt ? formatDate(post.publishedAt) : "Draft"}
+                </span>
+                <div>
+                  <h2 className="text-lg font-semibold text-foreground group-hover:underline">
+                    {post.title}
+                  </h2>
+                  <p className="text-muted font-sans text-sm">
+                    Printing Machines Lab
+                  </p>
+                </div>
+              </Link>
+            ))
+          )}
         </div>
       </main>
 
